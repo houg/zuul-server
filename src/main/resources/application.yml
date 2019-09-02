@@ -1,0 +1,65 @@
+server:
+  port: 8888
+  servlet:
+    context-path: /api
+
+spring:
+  application:
+     name: api-gateway
+  profiles:
+    active: apollo-env.properties
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 0
+      max-file-size: 102400000
+      max-request-size: 102400000
+#redis
+  redis:
+    host: www.ericer.top
+    password: tsp150600
+    port: 6379
+    database: 2
+    type: redis
+app:
+  id: evonate-newretail-api
+  
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://122.112.167.115/register/eureka/
+
+zuul: 
+  routes:
+    api-1:
+      path: /score/**
+      serviceId: enovate-newretail-score
+    api-2:
+      path: /user/**
+      serviceId: enovate-newretail-user
+    api-3:
+      path: /content/**
+      serviceId: enovate-newretail-content
+    api-4:
+      path: /file/**
+      serviceId: api-gateway
+ribbon:
+  ReadTimeout: 60000
+  ConnectTimeout: 60000
+
+
+
+snowflake:
+  workerId: 31
+  datacenterId: 31
+
+##logging
+logging:
+  path : /Users/kks/Develop/log/
+  file:
+    max-size : 50MB
+    max-history : 30
+  config : classpath:logback-spring.xml
+
+env:
+  prefix : dev_
